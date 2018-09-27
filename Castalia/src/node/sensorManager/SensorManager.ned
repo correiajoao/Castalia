@@ -33,12 +33,12 @@ simple SensorManager {
 
 	string devicesBias = default ("0.1");		//If the output signal is not zero when the measured property is zero
 
-	string devicesDrift = default ("");			//If the output signal slowly changes independent of the 
+	string devicesDrift = default ("0");			//If the output signal slowly changes independent of the 
 												//measured property
 												
 	string devicesNoise = default ("0.1");		//random deviation of the signal that varies in time
 
-	string devicesHysterisis = default ("");	//the sensor not instantly follows the change of the property 
+	string devicesHysterisis = default ("0");	//the sensor not instantly follows the change of the property 
 												//being measured and therefore involves the history of the 
 												//measured property
 

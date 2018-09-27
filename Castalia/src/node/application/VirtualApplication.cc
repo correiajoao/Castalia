@@ -99,7 +99,19 @@ void VirtualApplication::handleMessage(cMessage * msg)
 			}
 			break;
 		}
-
+		case APPLICATION_NOTIFICATION_PACKET:
+		{
+		    ApplicationPacket *rcvPacket = check_and_cast <ApplicationPacket*>(msg);
+            AppNetInfoExchange_type info = rcvPacket->getAppNetInfoExchange();
+            // If the packet has the correct appID OR the appID is the empty string,
+            // the packet is delivered by calling the app-specific function fromNetworkLayer()
+            if (applicationID.compare(rcvPacket->getApplicationID()) == 0 || applicationID.compare("") == 0) {
+                fromNetworkLayer(rcvPacket, info.source.c_str(), info.RSSI, info.LQI);
+                if (latencyMax > 0 && latencyBuckets > 0)
+                    collectHistogram("Application level latency, in ms", 1000 * SIMTIME_DBL(simTime() - info.timestamp));
+            }
+		 break;
+		}
 		case TIMER_SERVICE:
 		{
 			handleTimerMessage(msg);

@@ -12,6 +12,7 @@
 
 enum MobilityManagerMessageType {
 	MOBILITY_PERIODIC = 1;
+	UPDATE_DIRECTION = 2;
 }
 
 message MobilityManagerMessage {

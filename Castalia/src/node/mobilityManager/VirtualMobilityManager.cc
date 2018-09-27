@@ -11,6 +11,7 @@
  ****************************************************************************/
 
 #include "VirtualMobilityManager.h"
+#include <cstdlib>
 
 Define_Module(VirtualMobilityManager);
 
@@ -165,6 +166,7 @@ void VirtualMobilityManager::setLocation(NodeLocation_type newLocation)
 	nodeLocation = newLocation;
 	notifyWirelessChannel();
 }
+
 
 void VirtualMobilityManager::notifyWirelessChannel()
 {

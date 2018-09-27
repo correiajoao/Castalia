@@ -124,6 +124,27 @@ void VirtualRouting::handleMessage(cMessage * msg)
 			fromApplicationLayer(appPacket, appPacket->getAppNetInfoExchange().destination.c_str());
 			return;
 		}
+		case APPLICATION_NOTIFICATION_PACKET:
+        {
+            ApplicationPacket *appPacket = check_and_cast <ApplicationPacket*>(msg);
+            if (maxNetFrameSize > 0 && maxNetFrameSize < appPacket->getByteLength() + netDataFrameOverhead)
+            {
+                trace() << "Oversized packet dropped. Size:" << appPacket->getByteLength() <<
+                    ", Network layer overhead:" << netDataFrameOverhead <<
+                    ", max Network packet size:" << maxNetFrameSize;
+                break;
+            }
+            trace() << "Received [" << appPacket->getName() << "] from application layer";
+
+            /* Control is now passed to a specific routing protocol by calling fromApplicationLayer()
+             * Notice that after the call we RETURN (not BREAK) so that the packet is not deleted.
+             * This is done since the packet will most likely be encapsulated and forwarded to the
+             * MAC layer. If the protocol specific function wants to discard the packet is has
+             * to delete it.
+             */
+            fromApplicationLayer(appPacket, appPacket->getAppNetInfoExchange().destination.c_str());
+            return;
+        }
 
 		case NETWORK_LAYER_PACKET:
 		{

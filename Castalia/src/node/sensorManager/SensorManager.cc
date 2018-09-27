@@ -121,15 +121,15 @@ void SensorManager::handleMessage(cMessage * msg)
 
 			// add the sensor's Bias and the random noise 
 			theValue += sensorBias[sensorIndex];
-			theValue += normal(0, sensorNoiseSigma[sensorIndex], 1);
+			//theValue += normal(0, sensorNoiseSigma[sensorIndex], 1);
 
 			// process the limitations of the sensing device (sensitivity, resoultion and saturation)
-			if (theValue < sensorSensitivity[sensorIndex])
-				theValue = sensorSensitivity[sensorIndex];
+			//if (theValue < sensorSensitivity[sensorIndex])
+			//	theValue = sensorSensitivity[sensorIndex];
 			if (theValue > sensorSaturation[sensorIndex])
 				theValue = sensorSaturation[sensorIndex];
 
-			theValue = sensorResolution[sensorIndex] * lrint(theValue / sensorResolution[sensorIndex]);
+			//theValue = sensorResolution[sensorIndex] * lrint(theValue / sensorResolution[sensorIndex]);
 			sensorLastValue[sensorIndex] = theValue;
 
 			SensorReadingMessage *readingMsg =
