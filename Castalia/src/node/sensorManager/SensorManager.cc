@@ -59,6 +59,10 @@ void SensorManager::handleMessage(cMessage * msg)
 			break;
 		}
 
+		case STOP_POWER_DRAWN:{
+		    powerDrawn(0);
+		    break;
+		}
 		/*
 		 * Sent from Application to initiate a new sample request to the physical process.
 		 * The message contains information (its index) about the specific sensor device that 
@@ -87,7 +91,14 @@ void SensorManager::handleMessage(cMessage * msg)
 				send(requestMsg, "toNodeContainerModule", corrPhyProcess[sensorIndex]);
 
 				// update the remaining energy of the node
-				// powerDrawn(pwrConsumptionPerDevice[sensorIndex]);
+				powerDrawn(pwrConsumptionPerDevice[0] +
+				           pwrConsumptionPerDevice[1] +
+				           pwrConsumptionPerDevice[2] +
+				           pwrConsumptionPerDevice[3] +
+				           pwrConsumptionPerDevice[4] );
+
+				scheduleAt(simTime() + 0.1, new SensorReadingMessage("Stop power drawn", STOP_POWER_DRAWN));
+
 				// Left as is the module will draw this power always, that's why it's commented out.
 				// We need to schedule a timer to draw 0 power after some time. How much time?
 

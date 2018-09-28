@@ -48,6 +48,7 @@ enum CastaliaMessageTypes {
 
 	APPLICATION_PACKET = 50,
     APPLICATION_NOTIFICATION_PACKET = 51,
+    STOP_POWER_DRAWN = 52
 
 };
 
